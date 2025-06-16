@@ -23,3 +23,7 @@ export const refreshToken = async () => {
 
     return accessToken
 }
+
+export const login = async (username: string, password: string) => {
+
+}

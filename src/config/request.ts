@@ -1,7 +1,7 @@
 import axios from "axios";
 
 var axiosInstance = axios.create({
-    baseURL = "http://localhost:8080",
+    baseURL : "http://localhost:8080",
     timeout: 5000
 });
 
@@ -127,3 +127,5 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error)
     }
 );
+
+export default request;
