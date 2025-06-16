@@ -9,8 +9,13 @@ const UserQueryVO = reactive({
 })
 
 const getUserinfo = () => {
+  console.log("获取用户信息")
+  const  params = JSON.stringify(UserQueryVO);
+  console.log(params)
   getUserInfo(UserQueryVO).then(res => {
     console.log(res)
+  }).catch(error => {
+    console.log("请求失败",error)
   })
 }
 
@@ -22,7 +27,7 @@ const getUserinfo = () => {
 
   <div>
     <h1>HomeView</h1>
-    <button type="primary" @click="getUserinfo">获取用户信息</button>
+    <button @click="getUserinfo">获取用户信息</button>
 
   </div>
 
