@@ -18,8 +18,9 @@ const getUserinfo = () => {
   console.log(params)
   getUserInfo(UserQueryVO).then(res => {
     console.log(res)
-    userStore.setUserInfo(res)
-    console.log("用户信息",userStore.getUserInfo)
+    userStore.setUserInfo(res.sysUser)
+    console.log("用户信息",res.sysUser)
+    console.log("用户信息store",userStore.getUserInfo)
   }).catch(error => {
     console.log("请求失败",error)
   })

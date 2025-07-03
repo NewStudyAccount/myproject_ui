@@ -25,7 +25,7 @@ export const userInfoStore = defineStore('userInfoStore', {
     }),
     getters: {
         getUserInfo: (state) =>{
-            return state.user
+            return state.user;
         },
         getPermissionCode: (state) =>{
             return state.permissionCode
@@ -36,6 +36,14 @@ export const userInfoStore = defineStore('userInfoStore', {
     },
     actions: {
         setUserInfo(user: SysUser){
+            console.log("开始设置store的值"+user)
+            // this.user = {...user}
+            this.user.userId = user.userId
+            this.user.userName = user.userName
+            this.user.userAvatorUrl = user.userAvatorUrl
+            // this.$patch({
+            //     user: { ...user }
+            // })
         },
         setPermissionCode(permissionCode: string[]){
         },

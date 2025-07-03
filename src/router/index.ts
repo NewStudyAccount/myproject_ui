@@ -4,10 +4,16 @@ import Admin from "@/components/admin/Admin.vue";
 import ProductList from "@/views/ProductList.vue";
 import UserListView from "@/views/users/UserListView.vue";
 import RoleListView from "@/views/users/RoleListView.vue";
+import Login from "@/views/users/Login.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+        {
+            path: '/login',
+            name: 'login',
+            component: Login,
+        },
         {
             path: '/home',
             name: 'home',

@@ -1,6 +1,6 @@
 export type UserLoginVO = {
-  username: string
-  password: string
+  USER_NAME: string
+  PASSWORD: string
 }
 
 export type UserQueryVO = {
