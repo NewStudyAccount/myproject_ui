@@ -1,10 +1,8 @@
 <script setup lang="ts">
 
-import { reactive, ref } from 'vue'
+import { reactive, ref,unref} from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import {login} from "@/api/user.ts";
-import type {UserLoginVO} from "@/types/type.ts";
-import {sortUserPlugins} from "vite";
+import {login, type UserLoginVO} from "@/api/user.ts";
 
 // ruleFormRef 是一个 响应式引用，用于持有 <el-form> 的实例。 通过该引用，可以在组件中调用表单的方法，例如：validate()：触发表单校验；
 const ruleFormRef = ref<FormInstance>()
@@ -47,9 +45,9 @@ const ruleFormRef = ref<FormInstance>()
 //   }
 // }
 
-const UserLoginVO = reactive({
-  USER_NAME: '',
-  PASSWORD: '',
+const loginForm = reactive({
+  userName: '',
+  password: '',
 })
 
 
@@ -63,16 +61,22 @@ const UserLoginVO = reactive({
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
 
-  console.log("提交表单",UserLoginVO)
-  let promise = login(UserLoginVO);
-  console.log(promise)
-  // formEl.validate((valid) => {
-  //   if (valid) {
-  //     console.log('submit!')
-  //   } else {
-  //     console.log('error submit!')
-  //   }
-  // })
+  // formData.value 中移除响应式引用（unref），并将其类型断言为 ContractApi.ContractVO 类型
+  // 这种写法常见于 Vue 3 的 Composition API 中，尤其是在处理表单数据时，当你需要将响应式对象转换回原始类型或特定接口类型时非常有用
+  // const data = unref(formData.value) as unknown as ContractApi.ContractVO
+
+
+  console.log("配置地址信息"+import.meta.env.VITE_BASE_API)
+  console.log("提交表单Form对象信息",loginForm)
+  const data = unref(loginForm) as unknown as UserLoginVO
+  console.log("提交入参信息",data)
+  login(data).then(res => {
+    console.log("登录信息返回",res)
+  //   组织userStore 信息
+  }).catch(error => {
+    console.log("登录失败",error)
+  })
+
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
@@ -91,16 +95,16 @@ v-model="ruleForm.PASSWORD"：但实际绑定的数据模型字段名为 PASSWOR
   <el-form
       ref="ruleFormRef"
       style="max-width: 600px"
-      :model="UserLoginVO"
+      :model="loginForm"
       status-icon
       label-width="auto"
       class="demo-ruleForm"
   >
     <el-form-item label=用户名 prop="USER_NAME">
-      <el-input v-model="UserLoginVO.USER_NAME" type="text" autocomplete="off" />
+      <el-input v-model="loginForm.userName" type="text" autocomplete="off" />
     </el-form-item>
     <el-form-item label="密码" prop="PASSWORD">
-      <el-input v-model="UserLoginVO.PASSWORD" type="password" autocomplete="off"/>
+      <el-input v-model="loginForm.password" type="password" autocomplete="off"/>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm(ruleFormRef)">

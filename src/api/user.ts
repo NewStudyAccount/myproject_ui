@@ -1,4 +1,15 @@
 
+export interface UserLoginVO {
+  USER_NAME: string
+  PASSWORD: string
+}
+
+export interface UserQueryVO {
+    USER_ID: number
+}
+
+
+
 import type {UserLoginVO, UserQueryVO} from "@/types/type.ts";
 import axiosInstance from "@/config/request.ts";
 
