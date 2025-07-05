@@ -3,9 +3,12 @@
 import { reactive, ref,unref} from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import {login, type UserLoginVO} from "@/api/user.ts";
+import {userInfoStore} from "@/stores/userInfoStore.ts";
+import {useRouter} from "vue-router";
 
 // ruleFormRef 是一个 响应式引用，用于持有 <el-form> 的实例。 通过该引用，可以在组件中调用表单的方法，例如：validate()：触发表单校验；
 const ruleFormRef = ref<FormInstance>()
+const router = useRouter();
 
 // const checkAge = (rule: any, value: any, callback: any) => {
 //   if (!value) {
@@ -47,7 +50,7 @@ const ruleFormRef = ref<FormInstance>()
 
 const loginForm = reactive({
   userName: '',
-  password: '',
+  passWord: '',
 })
 
 
@@ -57,6 +60,8 @@ const loginForm = reactive({
 //   checkPass: [{ validator: validatePass2, trigger: 'blur' }],
 //   age: [{ validator: checkAge, trigger: 'blur' }],
 // })
+
+const userStore = userInfoStore();
 
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
@@ -70,12 +75,19 @@ const submitForm = (formEl: FormInstance | undefined) => {
   console.log("提交表单Form对象信息",loginForm)
   const data = unref(loginForm) as unknown as UserLoginVO
   console.log("提交入参信息",data)
-  login(data).then(res => {
-    console.log("登录信息返回",res)
-  //   组织userStore 信息
-  }).catch(error => {
-    console.log("登录失败",error)
-  })
+  // login(data).then(res => {
+  //   console.log("登录信息返回",res)
+  // //   组织userStore 信息
+  // }).catch(error => {
+  //   console.log("登录失败",error)
+  // })
+  const sunccess = userStore.login(data);
+  if (sunccess){
+    // 登录成功后跳转到主页
+    router.push({ name: 'product' }); // 或者 router.push('/')
+  }
+
+
 
 }
 
@@ -104,7 +116,7 @@ v-model="ruleForm.PASSWORD"：但实际绑定的数据模型字段名为 PASSWOR
       <el-input v-model="loginForm.userName" type="text" autocomplete="off" />
     </el-form-item>
     <el-form-item label="密码" prop="PASSWORD">
-      <el-input v-model="loginForm.password" type="password" autocomplete="off"/>
+      <el-input v-model="loginForm.passWord" type="password" autocomplete="off"/>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm(ruleFormRef)">

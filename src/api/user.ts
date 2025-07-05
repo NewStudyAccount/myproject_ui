@@ -1,7 +1,7 @@
 
 export interface UserLoginVO {
-  USER_NAME: string
-  PASSWORD: string
+  userName: string
+  passWord: string
 }
 
 export interface UserQueryVO {
@@ -19,8 +19,8 @@ export const login = (data: UserLoginVO) => {
 }
 
 
-export const getUserInfo = (data: UserQueryVO) => {
-    return axiosInstance.post( '/project/user/queryUserInfo', data )
+export const getUserInfo = () => {
+    return axiosInstance.post( '/project/queryUserInfo' )
 }
 
 export const getDynamicRouter = (data: UserQueryVO) => {

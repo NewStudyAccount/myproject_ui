@@ -61,7 +61,7 @@ axiosInstance.interceptors.response.use(
             ElNotification.error({ title: msg });
             return Promise.reject('error');
         } else {
-            return Promise.resolve(res.data);
+            return Promise.resolve(res);
         }
     },
     (error) =>{

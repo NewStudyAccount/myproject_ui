@@ -39,6 +39,7 @@ const router = createRouter({
             children: [
                 {
                     path: "/admin/product",
+                    name: 'product',
                     component: ProductList,
                     meta: {
                         title: '产品List测试'
