@@ -38,6 +38,14 @@ const router = createRouter({
             // 使用到 admin.vue 布局的，都需要放置在其子路由下面
             children: [
                 {
+                    path: "/admin/index",
+                    name: 'index',
+                    component: ProductList,
+                    meta: {
+                        title: '产品List测试'
+                    }
+                },
+                {
                     path: "/admin/product",
                     name: 'product',
                     component: ProductList,
