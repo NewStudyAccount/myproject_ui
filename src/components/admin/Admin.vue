@@ -1,6 +1,16 @@
 <script setup lang="ts">
 
 import NavigateLeft from "@/components/admin/components/NavigateLeft.vue";
+import {onMounted} from "vue";
+
+
+
+
+onMounted(
+
+)
+
+
 </script>
 
 <template>
