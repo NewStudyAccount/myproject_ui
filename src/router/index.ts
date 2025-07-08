@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Admin from "@/components/admin/Admin.vue";
+import Admin from "@/views/admin/Admin.vue";
 import ProductList from "@/views/ProductList.vue";
-import UserListView from "@/views/users/UserListView.vue";
-import RoleListView from "@/views/users/RoleListView.vue";
-import Login from "@/views/users/Login.vue";
+import UserListView from "@/views/admin/UserListView.vue";
+import RoleListView from "@/views/admin/RoleListView.vue";
+import Login from "@/views/admin/Login.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +35,7 @@ const router = createRouter({
         {
             path: '/admin',
             component: Admin,
+            name: 'admin',
             // 使用到 admin.vue 布局的，都需要放置在其子路由下面
             children: [
                 {

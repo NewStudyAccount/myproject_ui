@@ -2,13 +2,26 @@
 
 import NavigateLeft from "@/components/admin/components/NavigateLeft.vue";
 import {onMounted} from "vue";
+import {getDynamicRouter} from "@/api/user.ts";
+import router from "@/router";
+import {generateDynamicRoutes} from "@/router/dynamicRouter.ts";
 
 
 
+onMounted(async () => {
+  getDynamicRouter().then(res => {
+    console.log("获取动态路由信息", res);
+    const data = res.data;
 
-onMounted(
+    const dynamicRoutes = generateDynamicRoutes(data);
 
-)
+    // 动态添加路由到 Vue Router
+    dynamicRoutes.forEach(route => {
+      router.addRoute(route); // 添加每个动态路由
+    });
+
+  });
+});
 
 
 </script>

@@ -84,7 +84,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
   const sunccess = userStore.login(data);
   if (sunccess){
     // 登录成功后跳转到主页
-    router.push({ name: 'product' }); // 或者 router.push('/')
+    router.push({ name: 'admin' }); // 或者 router.push('/')
   }
 
 

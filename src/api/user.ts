@@ -23,6 +23,6 @@ export const getUserInfo = () => {
     return axiosInstance.post( '/project/queryUserInfo' )
 }
 
-export const getDynamicRouter = (data: UserQueryVO) => {
-    return axiosInstance.post( '/project/user/queryUserDynamicRouter', data )
+export const getDynamicRouter = () => {
+    return axiosInstance.post( '/project/getDynamicRouter')
 }

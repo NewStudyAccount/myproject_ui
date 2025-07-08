@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "@/router";
 
 const axiosInstance = axios.create({
     baseURL : "http://localhost:38080",
@@ -47,9 +48,14 @@ axiosInstance.interceptors.response.use(
         console.log('返回值',response)
 
 
-        if (code === 401) {
+        if (code === '401') {
             // 增加跳转登录页面的操作（需要执行删除当前缓存的相关的store信息）
             ElMessage({ message: msg, type: 'error' });
+
+            // 清除 token 和用户信息
+            localStorage.removeItem('token');
+            // 跳转到登录页
+            router.push({ name: 'login' });
             return Promise.reject('无效的会话，或者会话已过期，请重新登录。');
         } else if (code === '403') {
             ElMessage({ message: msg, type: 'error' });
