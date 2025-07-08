@@ -14,11 +14,7 @@ const router = createRouter({
             name: 'login',
             component: Login,
         },
-        {
-            path: '/home',
-            name: 'home',
-            component: HomeView,
-        },
+
         {
             path: '/about',
             name: 'about',
@@ -53,21 +49,7 @@ const router = createRouter({
                     meta: {
                         title: '产品List测试'
                     }
-                },
-                {
-                    path: "/admin/user",
-                    component: UserListView,
-                    meta: {
-                        title: '用户管理'
-                    }
-                },
-                {
-                    path: "/admin/role",
-                    component: RoleListView,
-                    meta: {
-                        title: '角色管理'
-                    }
-                },
+                }
             ]
         }
     ],

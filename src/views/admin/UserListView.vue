@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <h1>用户列表管理</h1>
+  <div>
+    <h1>用户列表页面</h1>
+  </div>
 
 </template>
 

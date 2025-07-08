@@ -4,8 +4,11 @@ import NavigateLeft from "@/components/admin/components/NavigateLeft.vue";
 import {onMounted} from "vue";
 import {getDynamicRouter} from "@/api/user.ts";
 import router from "@/router";
+import { useRoute } from 'vue-router'
 import {generateDynamicRoutes} from "@/router/dynamicRouter.ts";
+import {ref} from "vue";
 
+const dynamicRouters = ref<any[]>([]) // 初始化为空数组，避免 undefined
 
 
 onMounted(async () => {
@@ -14,11 +17,14 @@ onMounted(async () => {
     const data = res.data;
 
     const dynamicRoutes = generateDynamicRoutes(data);
+    dynamicRouters.value = dynamicRoutes;
 
     // 动态添加路由到 Vue Router
     dynamicRoutes.forEach(route => {
       router.addRoute(route); // 添加每个动态路由
     });
+
+    console.log("动态路由", router)
 
   });
 });
@@ -33,7 +39,7 @@ onMounted(async () => {
       <el-container>
 
         <el-aside width="200px">
-          <NavigateLeft/>
+          <NavigateLeft :routers ="dynamicRouters" />
         </el-aside>
         <el-container>
 
