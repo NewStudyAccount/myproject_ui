@@ -88,11 +88,11 @@ watch(() => props.routers, (newRouters) => {
 
         <div v-for="route in routers" :key="route.path">
           <el-menu-item :index="route.path" v-if="!route.children">
-            {{ route.meta?.title || route.menuName }}
+            {{ route.meta?.title || route.name }}
           </el-menu-item>
 
           <el-sub-menu :index="route.path" v-if="route.children">
-            <template #title>{{ route.meta?.title || route.menuName }}</template>
+            <template #title>{{ route.meta?.title || route.name }}</template>
             <el-menu-item
                 v-for="child in route.children"
                 :key="child.path"

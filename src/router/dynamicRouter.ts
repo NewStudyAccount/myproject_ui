@@ -8,12 +8,13 @@ const modules = import.meta.glob('./../views/**/*.vue')
 export const generateDynamicRoutes = (backendRoutes: any[]): RouteRecordRaw[] => {
     return backendRoutes.map(route => ({
         path: route.path,
-        name: route.componentName,
-        component: loadView(route.component),
+        // name: route.componentName,
+        component: route.component ? loadView(route.component) : undefined,
         // 如果有 meta、children 等字段也可以一并处理
         meta:{
-            title: route.menuName,
-        }
+            title: route.name,
+        },
+        children: route.children ? generateDynamicRoutes(route.children) : null
     }));
 };
 
