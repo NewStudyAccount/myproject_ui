@@ -11,6 +11,7 @@ import {
 import { useRoute } from 'vue-router'
 import { defineProps, watch } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
+import {usePermissionStore} from "@/stores/permission.ts";
 
 
 const route = useRoute()
@@ -23,15 +24,17 @@ const handleClose = (key: string, keyPath: string[]) => {
 }
 
 //在 NavigateLeft.vue 中声明接收的 props
-const props = defineProps<{
-  routers: RouteRecordRaw[]
-}>()
+// const props = defineProps<{
+//   routers: RouteRecordRaw[]
+// }>()
 
 // 监听 routers 的变化并打印
 // 打印动态路由数据
-watch(() => props.routers, (newRouters) => {
-  console.log('【NavigateLeft】接收到的动态路由:', newRouters)
-}, { deep: true, immediate: true })
+// //
+
+const permissionStore = usePermissionStore();
+const routers = permissionStore.routes;
+
 
 </script>
 

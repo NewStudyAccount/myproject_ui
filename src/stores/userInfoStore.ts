@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import {getUserInfo, login} from "@/api/user.ts";
+import {getUserInfo, login} from "@/api/authApi.ts";
+import {useRouter} from "vue-router";
 
 // 用户信息
 interface SysUser{
@@ -51,32 +52,49 @@ export const userInfoStore = defineStore('userInfoStore', {
         setRoles(roles: string[]){
         },
         async login(data: UserLoginVO){
-            await login(data).then(res=>{
-                console.log("登录成功",res)
+
+            try {
+                const res = await login(data);
+                console.log("登录成功", res)
                 const token = res.data.token;
+                console.log("store登录成功返回值",res);
                 if (token){
                     localStorage.setItem('token', token);
                 }
-                console.log("store登录成功返回值",res)
-                getUserInfo().then(res=>{
-                    console.log("存储用户信息",res)
-                    this.user.userId = res.data.sysUser.userId
-                    this.user.userName = res.data.sysUser.userName
-                    this.user.userAvatorUrl = res.data.sysUser.userAvatorUrl
-                    this.permissionCode = res.data.permissionCode
+                return true;
+            } catch (e) {
+                console.error('登录失败', e);
+            }
 
-                    return true; // 登录成功返回 true
+            // return new Promise((resolve, reject) => {
+            //     login(data).then(res => {
+            //         console.log("登录成功",res)
+            //         const token = res.data.token;
+            //         if (token){
+            //             localStorage.setItem('token', token);
+            //         }
+            //         console.log("store登录成功返回值",res);
+            //
+            //         // getUserInfo().then(res=>{
+            //         //     console.log("存储用户信息",res)
+            //         //     this.user.userId = res.data.sysUser.userId
+            //         //     this.user.userName = res.data.sysUser.userName
+            //         //     this.user.userAvatorUrl = res.data.sysUser.userAvatorUrl
+            //         //     this.permissionCode = res.data.permissionCode
+            //         //
+            //         //     return true; // 登录成功返回 true
+            //         //
+            //         // }).catch(err=>{
+            //         //     console.error('获取用户信息失败', err);
+            //         //     return false; // 登录失败返回 false
+            //         // })
+            //
+            //         resolve()
+            //     }).catch(error => {
+            //         reject(error)
+            //     })
+            // })
 
-                }).catch(err=>{
-                    console.error('获取用户信息失败', err);
-                    return false; // 登录失败返回 false
-                })
-
-
-            }).catch(err=>{
-                console.error('登录失败', err);
-                return false; // 登录失败返回 false
-            })
 
         },
     },

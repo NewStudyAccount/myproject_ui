@@ -1,29 +1,21 @@
-// api/authApi.ts
-import axios from 'axios'
-import { useAuthStore } from '@/stores/authStore'
-
-const authApi = axios.create({
-    baseURL: import.meta.env.VITE_API_URL
-})
-
-export const refreshToken = async () => {
-    const authStore = useAuthStore()
-    const refreshToken = authStore.getRefreshToken()
-
-    if (!refreshToken) {
-        throw new Error('No refresh token available')
-    }
-
-    const response = await authApi.post('/auth/refresh-token', {
-        refreshToken
-    })
-
-    const { accessToken } = response.data
-    authStore.setTokens(accessToken, refreshToken)
-
-    return accessToken
+export interface UserLoginVO {
+    userName: string
+    passWord: string
 }
 
-export const login = async (username: string, password: string) => {
+import type {UserLoginVO, UserQueryVO} from "@/types/type.ts";
+import axiosInstance from "@/config/request.ts";
 
+// 登录
+export const login = (data: UserLoginVO) => {
+    return axiosInstance.post('/project/admin/login', data )
+}
+
+
+export const getUserInfo = () => {
+    return axiosInstance.post( '/project/queryUserInfo' )
+}
+
+export const getDynamicRouter = () => {
+    return axiosInstance.post( '/project/getDynamicRouter')
 }

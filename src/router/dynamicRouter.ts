@@ -1,4 +1,8 @@
 import type {RouteRecordRaw} from "vue-router";
+import router from "@/router/index.ts";
+import {userInfoStore} from "@/stores/userInfoStore.ts";
+import {usePermissionStore} from "@/stores/permission.ts";
+
 
 // 匹配views里面所有的.vue文件
 const modules = import.meta.glob('./../views/**/*.vue')
@@ -19,12 +23,16 @@ export const generateDynamicRoutes = (backendRoutes: any[]): RouteRecordRaw[] =>
 };
 
 export const loadView = (view) => {
+    //
+    // console.log('尝试加载组件:', view)
+    // console.log('views里面所有的.vue文件:', modules)
+    if (view === 'Layout'){
+        return ()=>import('@/components/layout/Layout.vue')
+    }
 
-    console.log('尝试加载组件:', view)
-    console.log('views里面所有的.vue文件:', modules)
     let res
     for (const path in modules) {
-    console.log('views里面path:', path)
+    // console.log('views里面path:', path)
         const dir = path.split('views/')[1].split('.vue')[0]
         if (dir === view) {
             res = () => modules[path]()

@@ -2,14 +2,14 @@
 
 import { reactive, ref,unref} from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import {login, type UserLoginVO} from "@/api/user.ts";
 import {userInfoStore} from "@/stores/userInfoStore.ts";
 import {useRouter} from "vue-router";
+import type {UserLoginVO} from "@/api/authApi.ts";
 
 // ruleFormRef 是一个 响应式引用，用于持有 <el-form> 的实例。 通过该引用，可以在组件中调用表单的方法，例如：validate()：触发表单校验；
 const ruleFormRef = ref<FormInstance>()
 const router = useRouter();
-
+const userStore = userInfoStore();
 // const checkAge = (rule: any, value: any, callback: any) => {
 //   if (!value) {
 //     return callback(new Error('Please input the age'))
@@ -49,8 +49,8 @@ const router = useRouter();
 // }
 
 const loginForm = reactive({
-  userName: '',
-  passWord: '',
+  userName: 'zs',
+  passWord: '123456',
 })
 
 
@@ -61,33 +61,35 @@ const loginForm = reactive({
 //   age: [{ validator: checkAge, trigger: 'blur' }],
 // })
 
-const userStore = userInfoStore();
 
-const submitForm = (formEl: FormInstance | undefined) => {
+const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
 
   // formData.value 中移除响应式引用（unref），并将其类型断言为 ContractApi.ContractVO 类型
   // 这种写法常见于 Vue 3 的 Composition API 中，尤其是在处理表单数据时，当你需要将响应式对象转换回原始类型或特定接口类型时非常有用
   // const data = unref(formData.value) as unknown as ContractApi.ContractVO
 
-
   console.log("配置地址信息"+import.meta.env.VITE_BASE_API)
   console.log("提交表单Form对象信息",loginForm)
   const data = unref(loginForm) as unknown as UserLoginVO
   console.log("提交入参信息",data)
-  // login(data).then(res => {
-  //   console.log("登录信息返回",res)
-  // //   组织userStore 信息
+
+  // await userStore.login(data).then(res => {
+  //   console.log("登录成功,跳转Layout")
+  //   router.push({name: 'layout'}); // 在组件中跳转
   // }).catch(error => {
   //   console.log("登录失败",error)
   // })
-  const sunccess = userStore.login(data);
-  if (sunccess){
-    // 登录成功后跳转到主页
-    router.push({ name: 'admin' }); // 或者 router.push('/')
+
+  try {
+    const res = await userStore.login(data);
+    if (res) {
+      console.log("登录成功,跳转Layout")
+      await router.push({name: 'layout'});
+    }
+  } catch (e) {
+    console.log("登录失败",e)
   }
-
-
 
 }
 
