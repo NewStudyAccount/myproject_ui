@@ -1,8 +1,12 @@
 import axios from "axios";
+import router from "@/router";
 
 const axiosInstance = axios.create({
     baseURL : "http://localhost:38080",
-    timeout: 5000
+    timeout: 10000,
+    headers: {
+        'Content-Type': 'application/json', // 默认请求头
+    },
 });
 
 
@@ -39,42 +43,45 @@ axiosInstance.interceptors.response.use(
     function (response) {
         const res = response.data;
 
+        const code = res.code;
+        const msg = res.msg;
         console.log('返回值',response)
 
-        if (res.code !== '200') {
-            console.error('业务错误:', res.message || '请求失败');
-            return Promise.reject(new Error(res.message || 'Error'));
-        }
 
-        return res.data;
-    },
-    function (error) {
-        console.error('请求异常:', error);
+        if (code === '401') {
+            // 增加跳转登录页面的操作（需要执行删除当前缓存的相关的store信息）
+            ElMessage({ message: msg, type: 'error' });
 
-        if (error.response) {
-            switch (error.response.status) {
-                case 401:
-                    console.warn('未授权，请重新登录');
-                    // router.push('/login')
-                    break;
-                case 403:
-                    console.warn('权限不足');
-                    break;
-                case 404:
-                    console.warn('请求地址不存在');
-                    break;
-                case 500:
-                    console.warn('服务器内部错误');
-                    break;
-                default:
-                    console.warn('其他错误');
-            }
-        } else if (error.request) {
-            console.warn('无响应，可能是网络问题');
+            // 清除 token 和用户信息
+            localStorage.removeItem('token');
+            // 跳转到登录页
+            router.push({ name: 'login' });
+            return Promise.reject('无效的会话，或者会话已过期，请重新登录。');
+        } else if (code === '403') {
+            ElMessage({ message: msg, type: 'error' });
+            return Promise.reject(new Error(msg));
+        } else if (code === '500') {
+            ElMessage({ message: msg, type: 'error' });
+            return Promise.reject(new Error(msg));
+        } else if (code !== '200') {
+            ElNotification.error({ title: msg });
+            return Promise.reject('error');
         } else {
-            console.warn('请求配置错误:', error.message);
+            return Promise.resolve(res);
         }
+    },
+    (error) =>{
+        console.log('请求异常:', error);
 
+        let { message } = error;
+        if (message == 'Network Error') {
+            message = '后端接口连接异常';
+        } else if (message.includes('timeout')) {
+            message = '系统接口请求超时';
+        } else if (message.includes('Request failed with status code')) {
+            message = '系统接口' + message.substr(message.length - 3) + '异常';
+        }
+        ElMessage({ message: message, type: 'error', duration: 5 * 1000 });
         return Promise.reject(error);
     }
 );

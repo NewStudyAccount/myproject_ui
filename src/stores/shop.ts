@@ -70,7 +70,7 @@ export const useShopStore = defineStore('shop', {
 
     //指定key、存储方式、筛选数据
     persist: {
-        storage: localStorage,
+        storage: sessionStorage,
         getItemKey: (id) => `shopStore_${id}`, // 自定义 key 名，此api已经失效，推荐使用  key: 'my_shop_key'
         filter: ({ store }) => {
             return {

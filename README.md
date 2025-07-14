@@ -57,3 +57,10 @@ app.use(pinia)
     }
 ```
 
+
+
+
+vue的组件传值
+使用 prods 传值
+路由跳转
+![img_1.png](img_1.png)
