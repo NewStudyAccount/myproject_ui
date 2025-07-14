@@ -54,7 +54,7 @@ const routers = permissionStore.routes;
       >
 
 
-        <h1>此处的菜单需要使用动态路由实现</h1>
+
 <!--        <el-sub-menu index="1">-->
 <!--          <template #title>-->
 <!--            <el-icon><location /></el-icon>-->

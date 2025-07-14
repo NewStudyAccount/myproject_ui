@@ -60,13 +60,16 @@ router.beforeEach(async (to, from, next) => {
             next({ ...to, replace: true });
         }else {
             // 如果 to 路径没有匹配到任何路由
-            const resolved = router.resolve(to.fullPath);
-            if (resolved.name == null) {
-                console.warn(`路径 ${to.path} 未找到路由，尝试重新加载`);
-                next({ ...to, replace: true }); // 可选：强制再次尝试
-            } else {
-                next();
-            }
+            // const resolved = router.resolve(to.fullPath);
+            // console.log("跳转放行2",to.fullPath)
+            // console.log("跳转放行2",resolved)
+            // if (resolved.name == null) {
+            //     console.warn(`路径 ${to.path} 未找到路由，尝试重新加载`);
+            //     next({ ...to, replace: true }); // 可选：强制再次尝试
+            // } else {
+            //     next();
+            // }
+            next();
         }
     }else {
         // 没有token
