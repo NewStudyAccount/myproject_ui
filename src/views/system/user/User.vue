@@ -80,23 +80,22 @@ const handleClick = () => {
 <!--表头固定： table 设置 height 属性
     列固定： column 设置 fixed 属性
 -->
-
-  <el-table :data="tableData" style="width: 100%" height="250">
-    <el-table-column fixed prop="date" label="Date" width="150" />
-    <el-table-column prop="name" label="Name" width="120" />
-    <el-table-column prop="state" label="State" width="120" />
-    <el-table-column prop="city" label="City" width="120" />
-    <el-table-column prop="address" label="Address" width="600" />
-    <el-table-column prop="zip" label="Zip" width="120" />
-    <el-table-column fixed="right" label="Operations" min-width="120">
-      <template #default>
-        <el-button link type="primary" size="small" @click="handleClick">
-          Detail
-        </el-button>
-        <el-button link type="primary" size="small">Edit</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div style="overflow-x: auto;">
+    <el-table :data="tableData" style="min-width: 100%; white-space: nowrap;">
+      <el-table-column fixed prop="date" label="Date" width="150" />
+      <el-table-column prop="name" label="Name" width="120" />
+      <el-table-column prop="state" label="State" width="120" />
+      <el-table-column prop="city" label="City" width="120" />
+      <el-table-column prop="address" label="Address" width="600" />
+      <el-table-column prop="zip" label="Zip" width="120" />
+      <el-table-column fixed="right" label="Operations" min-width="120">
+        <template #default>
+          <el-button link type="primary" size="small">Detail</el-button>
+          <el-button link type="primary" size="small">Edit</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 
 </template>
 
