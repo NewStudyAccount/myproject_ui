@@ -3,6 +3,7 @@ import ProductList from "@/views/ProductList.vue";
 import Login from "@/views/Login.vue";
 import Layout from "@/components/layout/Layout.vue";
 import {usePermissionStore} from "@/stores/permission.ts";
+import RichTextEditor from "@/components/richText/RichTextEditor.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,7 +23,12 @@ const router = createRouter({
             component: Layout,
             name: 'layout',
             children: []
-        }
+        },
+        {
+            path: '/richEdit',
+            name: 'richEdit',
+            component: RichTextEditor,
+        },
     ],
 })
 
@@ -40,7 +46,7 @@ function isPathMatch(pattern, path) {
 }
 
 
-const whiteList = ['/login', '/register']
+const whiteList = ['/login', '/register','/richEdit']
 const isWhiteList = (path) => {
     return whiteList.some(pattern => isPathMatch(pattern, path))
 }

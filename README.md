@@ -64,3 +64,32 @@ vue的组件传值
 使用 prods 传值
 路由跳转
 ![img_1.png](img_1.png)
+
+
+
+富文本编辑器 选择 wangEditor
+https://www.wangeditor.com/
+``
+npm install @wangeditor/editor --save
+``
+
+如果你需要上传图片或视频等功能，还需要安装配套的 upload 模块：
+``npm install @wangeditor/editor-for-vue --save``
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

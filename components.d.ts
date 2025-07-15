@@ -32,6 +32,7 @@ declare module 'vue' {
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
     Layout: typeof import('./src/components/layout/Layout.vue')['default']
     NavigateLeft: typeof import('./src/components/layout/components/NavigateLeft.vue')['default']
+    RichTextEditor: typeof import('./src/components/richText/RichTextEditor.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']

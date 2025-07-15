@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {getUserInfo} from "@/api/user.ts";
+
 import {onMounted, reactive} from "vue";
 import {userInfoStore} from "@/stores/userInfoStore.ts";
 
