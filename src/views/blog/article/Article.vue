@@ -1,19 +1,36 @@
 <script setup lang="ts">
 
+import {ref} from "vue";
+
+import {onMounted} from "vue";
+
+const dialogVisible = ref(true);
+
+
+
+onMounted(()=>{
+  console.log("onMounted");
+  dialogVisible.value = true;
+})
+
 </script>
 
 <template>
 
-  <el-dialog title="提示" v-model="dialogVisible">
+  <el-row :gutter="20">
+
+
+  </el-row>
+
+
+
+  <el-dialog title="提示" v-model="dialogVisible" width="80%">
     <el-form>
-      <el-form-item label="用户名">
-        <el-input v-model="username"></el-input>
-      </el-form-item>
       <el-form-item label="文章内容">
         <el-form-item label="内容" prop="content">
           <!-- Markdown 编辑器 -->
-          <MdEditor v-model="updateArticleForm.content" @onUploadImg="onUploadImg"
-                    editorId="updateArticleEditor" />
+<!--          <MdEditor v-model="updateArticleForm.content" @onUploadImg="onUploadImg"-->
+<!--                    editorId="updateArticleEditor" />-->
         </el-form-item>
       </el-form-item>
     </el-form>

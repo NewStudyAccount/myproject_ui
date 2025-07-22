@@ -1,9 +1,11 @@
 <script setup lang="ts">
 
+import Upload from "@/components/upload/Upload.vue";
 </script>
 
 <template>
-  <h1>文章标签</h1>
+
+  <Upload/>
 
 </template>
 
