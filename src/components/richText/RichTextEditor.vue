@@ -3,8 +3,16 @@ import '@wangeditor/editor/dist/css/style.css'
 import { ref, shallowRef, onMounted, onBeforeUnmount } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { throttle } from 'lodash-es'
+import {saveArticleContent} from "@/api/article/ContentApi.js";
+
+// import {ArticleContentVo} from "@/api/article/ContentApi.js";
+
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
+
+
+
+
 
 // 内容 HTML
 const valueHtml = ref('<p>hello</p>')
@@ -44,8 +52,16 @@ const beforeUnloadHandler = (e) => {
   }
 }
 
-const saveContent = (content) => {
+const saveContent = async (content) => {
   console.log("保存数据", content)
+
+  const articleContentVo  =  {}
+  articleContentVo.content = content
+  await saveArticleContent(articleContentVo).then(res => {
+    console.log("保存成功")
+  }).catch(err => {
+    console.log("保存失败")
+  })
 }
 
 const save = () => {

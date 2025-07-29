@@ -3,7 +3,6 @@ export interface UserLoginVO {
     passWord: string
 }
 
-import type {UserLoginVO, UserQueryVO} from "@/types/type.ts";
 import axiosInstance from "@/config/request.ts";
 
 // 登录
