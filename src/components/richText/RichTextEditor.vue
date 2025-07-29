@@ -56,7 +56,9 @@ const saveContent = async (content) => {
   console.log("保存数据", content)
 
   const articleContentVo  =  {}
-  articleContentVo.content = content
+  articleContentVo.content = content;
+  articleContentVo.articleId = '11';
+  articleContentVo.id = '7355966980811132928';
   await saveArticleContent(articleContentVo).then(res => {
     console.log("保存成功")
   }).catch(err => {
