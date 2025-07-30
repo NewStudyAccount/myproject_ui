@@ -26,6 +26,7 @@ export const usePermissionStore =defineStore('permisssion', {
                 getDynamicRouter().then(res=>{
                     console.log("获取路由信息",res)
                     // this.routes = res.data
+                    //生成动态路由
                     this.routes = generateDynamicRoutes(res.data)
                     this.sidebarRoutes = generateDynamicRoutes(res.data)
                     resolve(this.sidebarRoutes)

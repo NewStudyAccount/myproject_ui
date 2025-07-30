@@ -45,7 +45,7 @@ axiosInstance.interceptors.response.use(
 
         const code = res.code;
         const msg = res.msg;
-        console.log('返回值',response)
+        console.log('响应拦截器返回值',response)
 
 
         if (code === '401') {
@@ -53,6 +53,7 @@ axiosInstance.interceptors.response.use(
             ElMessage({ message: msg, type: 'error' });
 
             // 清除 token 和用户信息
+            console.log("清除token信息")
             localStorage.removeItem('token');
             // 跳转到登录页
             router.push({ name: 'login' });
